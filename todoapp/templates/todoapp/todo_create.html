@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{%block title %}todo create {% endblock %}
+{%block content%}
+<div class="container create-form-container ">
+    <h1>create</h1>
+
+    <form  class=" create-todo-form "action="" method="POST">
+        <div class="input-container">
+            <label for="">{{form.work.label}}</label>
+            <input class="form-control" type="text" required name="work" id="id_work">
+            <p class="helper-text">please write your todo job</p>
+        </div>
+        <div class="input-container">
+            <label for="">{{form.date.label}}</label>
+            <input class="form-control" type="datetime-local"  name="date" id="id_date">
+            <p class="helper-text">please write date</p>
+        </div>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary"> submit </button>
+    </form>
+
+</div>
+
+{% endblock %}

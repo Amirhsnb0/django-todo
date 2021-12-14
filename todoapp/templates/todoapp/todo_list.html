@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} todo_list {% endblock %}
+{% block content %}
+<div class="list-todo-container">
+  {% if todolen == 0 %}
+  <div>
+  <h3> nothing is here ... </h3>
+  <a  href="{% url 'todoapp:todo_create'%}"> add item here  </a>
+  </div>
+  {%else%}
+      <div class="todo-list-container">
+        <form  method="POST" action="{% url 'todoapp:todo_list' %}" id="todo-list-form">
+            <div class="todo-list">
+              <ul class="list-group">
+                {%for todo in todoItem %}
+                <li class="list-group-item todo_item">
+                   <div class="todo-item-content">
+                      {% if todo.check %} 
+                      <input class="check-input form-check-input job-done-input" type="checkbox"  name= 'check' checked  value="{{todo.id}}" aria-label="...">
+                      <div class="job-done-text job-text">
+                        <h6>{{todo.work}}</h6>
+                        <p>{{todo.date}}</p>
+                      </div>
+                       {% else %}
+                      <input class="check-input form-check-input me-1" type="checkbox"  name='check' value="{{todo.id}}" aria-label="...">
+                      <div class="job-undone-text job-text">
+                        <h6>{{todo.work}}</h6>
+                        <p>{{todo.date}}</p>
+                      </div>
+                      {% endif %}
+                   </div>
+                  <div class="todo-item-action ">
+                    <a  class= "btn btn-danger" href="{% url 'todoapp:remove' todo.id %}"><i class="bi bi-trash-fill"></i></i></a>
+                    <a  class= "btn btn-secondary" href="{% url 'todoapp:remove' todo.id %}"><i class="bi bi-pencil-fill"></i></a>
+                  </div>
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+          <button type="submit" class="btn btn-primary">submit</button>
+          {% csrf_token %}
+        </form>
+      </div>
+  {% endif%}
+</div>
+<script>
+  let check_input=document.getElementsByName('check')
+  let form=document.getElementById("todo-list-form")
+    check_input.forEach(element=>{
+      element.addEventListener("click",function(){
+        form.submit()
+      })
+    })
+</script>
+ 
+
+{% endblock %}
